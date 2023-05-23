@@ -1,0 +1,133 @@
+using System;
+
+public class Person
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+}
+
+public class FootballPlayer : Person
+{
+    public int Number { get; set; }
+    public double Height { get; set; }
+}
+
+public class Goalkeeper : FootballPlayer
+{
+}
+
+public class Defender : FootballPlayer
+{
+}
+
+public class Midfielder : FootballPlayer
+{
+}
+
+public class Striker : FootballPlayer
+{
+}
+
+public class Coach : Person
+{
+}
+
+public class Referee : Person
+{
+}
+
+public class Team
+{
+    public Coach Coach { get; set; }
+    public FootballPlayer[] Players { get; set; }
+
+    public double CalculateAverageAge()
+    {
+        int totalAge = 0;
+
+        foreach (var player in Players)
+        {
+            totalAge += player.Age;
+        }
+
+        return (double)totalAge / Players.Length;
+    }
+}
+
+public class Goal
+{
+    public int Minute { get; set; }
+    public FootballPlayer Player { get; set; }
+}
+
+public class Game
+{
+    public Team Team1 { get; set; }
+    public Team Team2 { get; set; }
+    public Referee Referee { get; set; }
+    public Person[] AssistantReferees { get; set; }
+    public Goal[] Goals { get; set; }
+    public string Result { get; set; }
+    public Team Winner { get; set; }
+
+    public void PrintResult()
+    {
+        Console.WriteLine("Result: " + Result);
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        
+        FootballPlayer player1 = new Goalkeeper
+        {
+            Name = "Player 1",
+            Age = 25,
+            Number = 1,
+            Height = 1.85
+        };
+
+        FootballPlayer player2 = new Defender
+        {
+            Name = "Player 2",
+            Age = 26,
+            Number = 5,
+            Height = 1.80
+        };
+
+        
+        Coach coach = new Coach
+        {
+            Name = "Coach",
+            Age = 40
+        };
+
+        
+        Team team = new Team
+        {
+            Coach = coach,
+            Players = new FootballPlayer[] { player1, player2 }
+        };
+
+        double averageAge = team.CalculateAverageAge();
+        Console.WriteLine("Average age of players: " + averageAge);
+
+        
+        Game game = new Game
+        {
+            Team1 = team,
+            Referee = new Referee
+            {
+                Name = "Referee",
+                Age = 35
+            }
+        };
+
+        game.Result = "2-1";
+        game.Winner = team;
+
+        game.PrintResult();
+    }
+}
